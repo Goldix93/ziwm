@@ -48,6 +48,21 @@ table(data_test_target, m1)
 table(data_test_target, m2)
 
 
+#knn rozne miary odleglosci
+require(knnGarden)
+
+#Euclidean
+m5 <- knnVCN(TrnX = data_n_train, OrigTrnG = data_train_target, TstX = data_n_test, K = 25, ShowObs = FALSE, method = "euclidean", p = 2)
+
+m5 <- m5[,1]
+table(data_test_target, m5)
+
+#Manhattan
+m6 <- knnVCN(TrnX = data_n_train, OrigTrnG = data_train_target, TstX = data_n_test, K = 25, ShowObs = FALSE, method = "manhattan", p = 2)
+
+m6 <- m6[,1]
+table(data_test_target, m6)
+
 #---------------nm----------------
 
 require(klaR)
