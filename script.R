@@ -1,7 +1,8 @@
 require(class)
 #http://archive.ics.uci.edu/ml/datasets/ILPD+%28Indian+Liver+Patient+Dataset%29#
 #wczytywanie danych z pliku csv
-data = read.csv("Documents/ziwm/Indian Liver Patient Dataset (ILPD).csv")
+#data = read.csv("Documents/ziwm/Indian Liver Patient Dataset (ILPD).csv")
+data = read.csv("d:/Polibuda/med_proj/ziwm-master/Indian Liver Patient Dataset (ILPD).csv")
 
 #listowanie podstawowych informacji o danych
 summary(data)
@@ -110,4 +111,23 @@ m4$lev <- as.character((1:2))
 #sprawdzenie poprawnosci dzialania algorytmu, x,y = (1,1) i (2,2) = poprawne,
 #(1,2) i (2,1) = bledna klasyfikacja
 table(data$Selector,predict(m4)$class)
+
+#----------- selecting features ----------------
+
+library(FSelector)
+weights <- chi.squared(Selector ~., data)
+print(weights)
+
+subset <- cutoff.k(weights, 4)
+
+f <- as.simple.formula(subset, "Selector")
+print(f)
+
+m8 <- nm(f, data)
+
+m8$grouping <- factor(1:2)
+
+m8$lev <- as.character((1:2))
+
+table(data$Selector,predict(m8)$class)
 
